@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.4.1, created on 2024-11-20 20:34:55
+/* Smarty version 5.4.1, created on 2024-11-20 20:50:54
   from 'file:matriculas/index.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.1',
-  'unifunc' => 'content_673e47ef1bc261_19447680',
+  'unifunc' => 'content_673e4bae605824_94743056',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,19 +20,19 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673e47ef1bc261_19447680 (\Smarty\Template $_smarty_tpl) {
+function content_673e4bae605824_94743056 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\matriculas';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1333762115673e47ef1afcb8_14807487', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_114425851673e4bae5f9302_71707072', "content");
 ?>
 
 <?php $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "layouts/main.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_1333762115673e47ef1afcb8_14807487 extends \Smarty\Runtime\Block
+class Block_114425851673e4bae5f9302_71707072 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\matriculas';

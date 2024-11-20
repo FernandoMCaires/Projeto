@@ -66,14 +66,18 @@ class MatriculaController
     // Mostrar formulário de criação
     public function novo()
     {
-        // Busca apenas alunos ativos para novas matrículas
-        $alunos = $this->em->getRepository(Aluno::class)->findBy(['ativo' => true]);
-        $cursos = $this->em->getRepository(Curso::class)->findBy(['ativo' => true]);
-        
-        $this->smarty->assign('title', 'Nova Matrícula - Sistema de Matrículas');
-        $this->smarty->assign('alunos', $alunos);
-        $this->smarty->assign('cursos', $cursos);
-        $this->smarty->display('matriculas/form.tpl');
+        try {
+            $alunos = $this->em->getRepository(Aluno::class)->findBy(['ativo' => true]);
+            $cursos = $this->em->getRepository(Curso::class)->findBy(['ativo' => true]);
+
+            $this->smarty->assign('title', 'Nova Matrícula - Sistema de Matrículas');
+            $this->smarty->assign('alunos', $alunos);
+            $this->smarty->assign('cursos', $cursos);
+            $this->smarty->display('matriculas/form.tpl');
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao carregar formulário de nova matrícula: ' . $e->getMessage());
+            $this->smarty->display('matriculas/form.tpl');
+        }
     }
 
     // Criar nova matrícula
@@ -152,7 +156,7 @@ class MatriculaController
         $this->smarty->assign('matricula', $matricula);
         $this->smarty->assign('alunos', $alunos);
         $this->smarty->assign('curso', $curso);
-        $this->smarty->display('matriculas/form.tpl');
+        $this->smarty->display('matriculas/edicao.tpl');
     }
 
     // Atualizar matrícula

@@ -9,7 +9,7 @@
 
 1. Clone o repositório
 2. Execute `composer install`
-3. Configure o arquivo de ambiente com as credenciais do banco
+3. Configure o arquivo de ambiente com as credenciais do banco em cli-config.php (Crie um banco de dados com o nome admin e deixe o server on)
 4. Execute as migrations: `php vendor/bin/doctrine-migrations migrations:migrate`
 5. Execute o seed para criar o usuário admin: `php database/seeds/CriarUsuarioAdmin.php`
 
