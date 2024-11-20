@@ -32,7 +32,7 @@
                         
                         <div class="mb-3">
                             <label for="curso_id" class="form-label">Curso</label>
-                            <select class="form-select" id="curso_id" name="curso_id" required>
+                            <select class="form-select" id="curso_id" name="curso_id[]" multiple required>
                                 {foreach $cursos as $curso}
                                     <option value="{$curso->getId()}"
                                         {if isset($matricula) && $matricula->getCurso()->getId() == $curso->getId()}selected{/if}>
@@ -40,6 +40,7 @@
                                     </option>
                                 {/foreach}
                             </select>
+                            <small class="form-text text-muted">Use CTRL para selecionar múltiplos cursos</small>
                         </div>
 
                         {if isset($matricula)}
