@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Curso;
+use App\Models\Matricula;
 use Doctrine\ORM\EntityManager;
 use Smarty\Smarty;
 
@@ -20,11 +21,14 @@ class CursoController
     // Listar todos os cursos
     public function index()
     {
-        $cursos = $this->em->getRepository(Curso::class)->findAll();
-        
-        $this->smarty->assign('title', 'Cursos - Sistema de Matrículas');
-        $this->smarty->assign('cursos', $cursos);
-        $this->smarty->display('cursos/index.tpl');
+        try {
+            $cursos = $this->em->getRepository(Curso::class)->findBy([], ['id' => 'DESC']);
+            $this->smarty->assign('cursos', $cursos);
+            $this->smarty->display('cursos/index.tpl');
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao listar cursos: ' . $e->getMessage());
+            $this->smarty->display('cursos/index.tpl');
+        }
     }
 
     // Mostrar formulário de criação
@@ -74,11 +78,70 @@ class CursoController
     // Deletar curso
     public function delete(int $id)
     {
-        $curso = $this->em->find(Curso::class, $id);
-        $this->em->remove($curso);
-        $this->em->flush();
+        try {
+            $curso = $this->em->find(Curso::class, $id);
+            
+            // Em vez de excluir, marca como inativo
+            $curso->setAtivo(false);
+            
+            // Opcionalmente, atualiza as matrículas
+            $matriculas = $this->em->getRepository(Matricula::class)->findBy(['curso' => $curso]);
+            foreach ($matriculas as $matricula) {
+                $matricula->setStatus('Cancelada');
+            }
+            
+            $this->em->flush();
 
-        header('Location: /cursos');
-        exit;
+            header('Location: /cursos');
+            exit;
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao desativar curso: ' . $e->getMessage());
+            $this->index();
+        }
+    }
+
+    public function toggleStatus(int $id)
+    {
+        try {
+            $curso = $this->em->find(Curso::class, $id);
+            
+            if (!$curso) {
+                throw new \Exception('Curso não encontrado');
+            }
+
+            // Inverte o status atual do curso
+            $novoStatus = !$curso->isAtivo();
+            $curso->setAtivo($novoStatus);
+
+            // Se o curso está sendo desativado, cancela todas as matrículas ativas
+            if (!$novoStatus) {
+                $matriculas = $this->em->getRepository(Matricula::class)->findBy([
+                    'curso' => $curso,
+                    'status' => 'Ativa'
+                ]);
+
+                foreach ($matriculas as $matricula) {
+                    $matricula->setStatus('Cancelada');
+                }
+
+                $mensagem = sprintf(
+                    'Curso desativado com sucesso. %d matrícula(s) foram canceladas automaticamente.',
+                    count($matriculas)
+                );
+            } else {
+                $mensagem = 'Curso ativado com sucesso.';
+            }
+            
+            $this->em->flush();
+            
+            // Adiciona mensagem de sucesso na sessão
+            $_SESSION['success'] = $mensagem;
+
+            header('Location: /cursos');
+            exit;
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao alterar status do curso: ' . $e->getMessage());
+            $this->index();
+        }
     }
 }

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.1, created on 2024-11-20 04:04:13
+/* Smarty version 5.4.1, created on 2024-11-20 19:11:53
   from 'file:alunos/index.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.1',
-  'unifunc' => 'content_673d5fbde38b63_67600950',
+  'unifunc' => 'content_673e3479938d19_62243095',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1bdefd4fd89b5aeb83406457392f86661b271f46' => 
     array (
       0 => 'alunos/index.tpl',
-      1 => 1732075267,
+      1 => 1732129274,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673d5fbde38b63_67600950 (\Smarty\Template $_smarty_tpl) {
+function content_673e3479938d19_62243095 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\alunos';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1087889954673d5fbde30fd9_49800865', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1087600772673e347992f155_22451575', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "layouts/main.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_1087889954673d5fbde30fd9_49800865 extends \Smarty\Runtime\Block
+class Block_1087600772673e347992f155_22451575 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\alunos';
@@ -39,6 +39,7 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\alunos';
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/dashboard" class="btn btn-primary"> Voltar </a>
         <h1>Alunos</h1>
         <a href="/alunos/novo" class="btn btn-primary">Novo Aluno</a>
     </div>
@@ -77,17 +78,16 @@ $foreach0DoElse = false;
 </td>
                                 <td><?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')($_smarty_tpl->getValue('aluno')->getDataNascimento(),"%d/%m/%Y");?>
 </td>
-                                <td>
-                                    <a href="/alunos/editar/<?php echo $_smarty_tpl->getValue('aluno')->getId();?>
+                                <td class="text-center">
+                                    <a href="/alunos/toggle-status/<?php echo $_smarty_tpl->getValue('aluno')->getId();?>
 " 
-                                       class="btn btn-sm btn-info">
-                                        Editar
+                                       class="btn btn-sm <?php if ($_smarty_tpl->getValue('aluno')->isAtivo()) {?>btn-success<?php } else { ?>btn-danger<?php }?>"
+                                       onclick="return confirm('Deseja alterar o status deste aluno?')">
+                                        <?php if ($_smarty_tpl->getValue('aluno')->isAtivo()) {?>Ativo<?php } else { ?>Inativo<?php }?>
                                     </a>
-                                    <a href="/alunos/excluir/<?php echo $_smarty_tpl->getValue('aluno')->getId();?>
-" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Tem certeza que deseja excluir este aluno?')">
-                                        Excluir
+                                    <a href="/alunos/editar/<?php echo $_smarty_tpl->getValue('aluno')->getId();?>
+" class="btn btn-sm btn-info">
+                                        <i class="bi bi-pencil-fill"></i> Editar
                                     </a>
                                 </td>
                             </tr>

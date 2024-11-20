@@ -32,10 +32,6 @@ class AuthController
             $usuario = $this->em->getRepository(Usuario::class)
                 ->findOneBy(['email' => $email]);
             
-            // Debug da verificação da senha
-            echo "Senha digitada: " . $senha . "<br>";
-            echo "Hash no banco: " . $usuario->getSenha() . "<br>";
-            echo "Resultado do password_verify: " . (password_verify($senha, $usuario->getSenha()) ? 'true' : 'false') . "<br>";
             
             if ($usuario && password_verify($senha, $usuario->getSenha())) {
                 session_start();

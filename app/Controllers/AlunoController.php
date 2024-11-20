@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Aluno;
+use App\Models\Matricula;
 use Doctrine\ORM\EntityManager;
 use Smarty\Smarty;
 
@@ -97,6 +98,50 @@ class AlunoController
             exit;
         } catch (\Exception $e) {
             $this->smarty->assign('error', 'Erro ao excluir aluno: ' . $e->getMessage());
+            $this->index();
+        }
+    }
+
+    public function toggleStatus(int $id)
+    {
+        try {
+            $aluno = $this->em->find(Aluno::class, $id);
+            
+            if (!$aluno) {
+                throw new \Exception('Aluno não encontrado');
+            }
+
+            // Inverte o status atual do aluno
+            $novoStatus = !$aluno->isAtivo();
+            $aluno->setAtivo($novoStatus);
+
+            // Se o aluno está sendo desativado, cancela todas as matrículas ativas
+            if (!$novoStatus) {
+                $matriculas = $this->em->getRepository(Matricula::class)->findBy([
+                    'aluno' => $aluno,
+                    'status' => 'Ativa'
+                ]);
+
+                foreach ($matriculas as $matricula) {
+                    $matricula->setStatus('Cancelada');
+                }
+
+                $mensagem = sprintf(
+                    'Aluno desativado com sucesso. %d matrícula(s) foram canceladas automaticamente.',
+                    count($matriculas)
+                );
+            } else {
+                $mensagem = 'Aluno ativado com sucesso.';
+            }
+            
+            $this->em->flush();
+            
+            $_SESSION['success'] = $mensagem;
+
+            header('Location: /alunos');
+            exit;
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao alterar status do aluno: ' . $e->getMessage());
             $this->index();
         }
     }

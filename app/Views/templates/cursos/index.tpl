@@ -3,6 +3,7 @@
 {block name="content"}
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/dashboard" class="btn btn-secondary">Voltar</a>
         <h1>Cursos</h1>
         <a href="/cursos/novo" class="btn btn-primary">Novo Curso</a>
     </div>
@@ -23,6 +24,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Descrição</th>
+                        <th>Alterar</th>
                         <th width="200">Ações</th>
                     </tr>
                 </thead>
@@ -34,14 +36,16 @@
                                 <td>{$curso->getNome()}</td>
                                 <td>{$curso->getDescricao()}</td>
                                 <td>
+                                    <a href="/cursos/toggle-status/{$curso->getId()}" 
+                                       class="btn btn-sm {if $curso->isAtivo()}btn-success{else}btn-danger{/if}"
+                                       onclick="return confirm('Deseja alterar o status deste curso?')">
+                                        {if $curso->isAtivo()}Ativo{else}Inativo{/if}
+                                    </a>
+                                </td>
+                                <td>
                                     <a href="/cursos/editar/{$curso->getId()}" 
                                        class="btn btn-sm btn-info">
                                         Editar
-                                    </a>
-                                    <a href="/cursos/excluir/{$curso->getId()}" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Tem certeza que deseja excluir este curso?')">
-                                        Excluir
                                     </a>
                                 </td>
                             </tr>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.1, created on 2024-11-20 04:30:32
+/* Smarty version 5.4.1, created on 2024-11-20 19:11:37
   from 'file:cursos/index.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.1',
-  'unifunc' => 'content_673d65e8996c17_56807109',
+  'unifunc' => 'content_673e3469d7e2d7_51518378',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1ed5202ef06dbe341c9977ed3964f9827a4d9ac9' => 
     array (
       0 => 'cursos/index.tpl',
-      1 => 1732074382,
+      1 => 1732128659,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673d65e8996c17_56807109 (\Smarty\Template $_smarty_tpl) {
+function content_673e3469d7e2d7_51518378 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1056308349673d65e898f415_04010210', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_173824886673e3469d76970_02233601', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "layouts/main.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_1056308349673d65e898f415_04010210 extends \Smarty\Runtime\Block
+class Block_173824886673e3469d76970_02233601 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
@@ -39,6 +39,7 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/dashboard" class="btn btn-secondary">Voltar</a>
         <h1>Cursos</h1>
         <a href="/cursos/novo" class="btn btn-primary">Novo Curso</a>
     </div>
@@ -61,6 +62,7 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Descrição</th>
+                        <th>Alterar</th>
                         <th width="200">Ações</th>
                     </tr>
                 </thead>
@@ -80,16 +82,18 @@ $foreach0DoElse = false;
                                 <td><?php echo $_smarty_tpl->getValue('curso')->getDescricao();?>
 </td>
                                 <td>
+                                    <a href="/cursos/toggle-status/<?php echo $_smarty_tpl->getValue('curso')->getId();?>
+" 
+                                       class="btn btn-sm <?php if ($_smarty_tpl->getValue('curso')->isAtivo()) {?>btn-success<?php } else { ?>btn-danger<?php }?>"
+                                       onclick="return confirm('Deseja alterar o status deste curso?')">
+                                        <?php if ($_smarty_tpl->getValue('curso')->isAtivo()) {?>Ativo<?php } else { ?>Inativo<?php }?>
+                                    </a>
+                                </td>
+                                <td>
                                     <a href="/cursos/editar/<?php echo $_smarty_tpl->getValue('curso')->getId();?>
 " 
                                        class="btn btn-sm btn-info">
                                         Editar
-                                    </a>
-                                    <a href="/cursos/excluir/<?php echo $_smarty_tpl->getValue('curso')->getId();?>
-" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Tem certeza que deseja excluir este curso?')">
-                                        Excluir
                                     </a>
                                 </td>
                             </tr>

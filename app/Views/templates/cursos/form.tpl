@@ -6,7 +6,10 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2>{if isset($curso)}Editar{else}Novo{/if} Curso</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>{if isset($curso)}Editar{else}Novo{/if} Curso</h2>
+                        <a href="/cursos" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{if isset($curso)}/cursos/update/{$curso->getId()}{else}/cursos/criar{/if}">

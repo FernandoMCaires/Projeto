@@ -22,18 +22,53 @@ class MatriculaController
     // Listar todas as matrículas
     public function index()
     {
-        $matriculas = $this->em->getRepository(Matricula::class)->findAll();
-        
-        $this->smarty->assign('title', 'Matrículas - Sistema de Matrículas');
-        $this->smarty->assign('matriculas', $matriculas);
-        $this->smarty->display('matriculas/index.tpl');
+        try {
+            $search = isset($_GET['search']) ? trim($_GET['search']) : null;
+            
+            if ($search) {
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('m')
+                   ->from(Matricula::class, 'm')
+                   ->join('m.aluno', 'a')
+                   ->join('m.curso', 'c')
+                   ->where($qb->expr()->orX(
+                       $qb->expr()->like('a.nome', ':search'),
+                       $qb->expr()->like('c.nome', ':search')
+                   ))
+                   ->andWhere('a.ativo = :ativo')
+                   ->setParameter('search', '%' . $search . '%')
+                   ->setParameter('ativo', true)
+                   ->orderBy('m.id', 'DESC');
+
+                $matriculas = $qb->getQuery()->getResult();
+            } else {
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('m')
+                   ->from(Matricula::class, 'm')
+                   ->join('m.aluno', 'a')
+                   ->where('a.ativo = :ativo')
+                   ->setParameter('ativo', true)
+                   ->orderBy('m.id', 'DESC');
+
+                $matriculas = $qb->getQuery()->getResult();
+            }
+
+            $this->smarty->assign('matriculas', $matriculas);
+            $this->smarty->assign('search', $search);
+            $this->smarty->display('matriculas/index.tpl');
+            
+        } catch (\Exception $e) {
+            $this->smarty->assign('error', 'Erro ao listar matrículas: ' . $e->getMessage());
+            $this->smarty->display('matriculas/index.tpl');
+        }
     }
 
     // Mostrar formulário de criação
     public function novo()
     {
-        $alunos = $this->em->getRepository(Aluno::class)->findAll();
-        $cursos = $this->em->getRepository(Curso::class)->findAll();
+        // Busca apenas alunos ativos para novas matrículas
+        $alunos = $this->em->getRepository(Aluno::class)->findBy(['ativo' => true]);
+        $cursos = $this->em->getRepository(Curso::class)->findBy(['ativo' => true]);
         
         $this->smarty->assign('title', 'Nova Matrícula - Sistema de Matrículas');
         $this->smarty->assign('alunos', $alunos);
@@ -45,25 +80,58 @@ class MatriculaController
     public function create()
     {
         try {
+            if (!isset($_POST['aluno_id']) || !isset($_POST['curso_id']) || !is_array($_POST['curso_id'])) {
+                throw new \Exception('Dados inválidos');
+            }
+
             $aluno = $this->em->find(Aluno::class, $_POST['aluno_id']);
+            if (!$aluno) {
+                throw new \Exception('Aluno não encontrado');
+            }
+
             $cursos = $_POST['curso_id'];
+            
+            // Contador para verificar matrículas criadas
+            $matriculasCriadas = 0;
 
             foreach ($cursos as $curso_id) {
                 $curso = $this->em->find(Curso::class, $curso_id);
                 
-                $matricula = new Matricula();
-                $matricula->setAluno($aluno);
-                $matricula->setCurso($curso);
-                $matricula->setDataMatricula(new \DateTime());
-                $matricula->setStatus('Ativa');
+                if (!$curso) {
+                    throw new \Exception('Curso não encontrado: ' . $curso_id);
+                }
+                
+                // Verifica se já existe matrícula para este aluno e curso
+                $matriculaExistente = $this->em->getRepository(Matricula::class)->findOneBy([
+                    'aluno' => $aluno,
+                    'curso' => $curso,
+                    'status' => 'Ativa'
+                ]);
 
-                $this->em->persist($matricula);
+                if (!$matriculaExistente) {
+                    $matricula = new Matricula();
+                    $matricula->setAluno($aluno);
+                    $matricula->setCurso($curso);
+                    $matricula->setDataMatricula(new \DateTime());
+                    $matricula->setStatus('Ativa');
+
+                    $this->em->persist($matricula);
+                    $matriculasCriadas++;
+                }
             }
 
-            $this->em->flush();
-            header('Location: /matriculas');
-            exit;
+            if ($matriculasCriadas > 0) {
+                $this->em->flush();
+                header('Location: /matriculas');
+                exit;
+            } else {
+                throw new \Exception('Esse usuário já possui uma matrícula ativa nesse curso');
+            }
+
         } catch (\Exception $e) {
+            error_log('Erro ao criar matrícula: ' . $e->getMessage());
+            error_log('POST: ' . print_r($_POST, true));
+            
             $this->smarty->assign('error', 'Erro ao criar matrícula: ' . $e->getMessage());
             $this->novo();
         }
@@ -94,10 +162,18 @@ class MatriculaController
             }
 
             $aluno = $this->em->find(Aluno::class, $_POST['aluno_id']);
-            $curso = $this->em->find(Curso::class, $_POST['curso_id']);
+            if (!$aluno) {
+                throw new \Exception('Aluno não encontrado');
+            }
 
-            if (!$aluno || !$curso) {
-                throw new \Exception('Aluno ou Curso não encontrado');
+            $curso = $this->em->find(Curso::class, $_POST['curso_id']);
+            if (!$curso) {
+                throw new \Exception('Curso não encontrado');
+            }
+
+            // Verifica se está tentando ativar uma matrícula de um curso inativo
+            if ($_POST['status'] === 'Ativa' && !$curso->isAtivo()) {
+                throw new \Exception('Não é possível ativar uma matrícula para um curso inativo');
             }
 
             $matricula->setAluno($aluno);
@@ -106,6 +182,7 @@ class MatriculaController
 
             $this->em->flush();
 
+            $_SESSION['success'] = 'Matrícula atualizada com sucesso!';
             header('Location: /matriculas');
             exit;
         } catch (\Exception $e) {

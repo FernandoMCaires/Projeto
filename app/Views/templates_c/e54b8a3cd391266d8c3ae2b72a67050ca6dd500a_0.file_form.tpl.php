@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.1, created on 2024-11-20 04:30:31
+/* Smarty version 5.4.1, created on 2024-11-20 18:37:59
   from 'file:cursos/form.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.1',
-  'unifunc' => 'content_673d65e73e3a98_91336171',
+  'unifunc' => 'content_673e2c877fa8d1_02268364',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e54b8a3cd391266d8c3ae2b72a67050ca6dd500a' => 
     array (
       0 => 'cursos/form.tpl',
-      1 => 1732074331,
+      1 => 1732126425,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673d65e73e3a98_91336171 (\Smarty\Template $_smarty_tpl) {
+function content_673e2c877fa8d1_02268364 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_297147217673d65e73dcd09_94967290', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1256671891673e2c877f31f4_16632785', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "layouts/main.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_297147217673d65e73dcd09_94967290 extends \Smarty\Runtime\Block
+class Block_1256671891673e2c877f31f4_16632785 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
@@ -42,7 +42,10 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\cursos';
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2><?php if ((null !== ($_smarty_tpl->getValue('curso') ?? null))) {?>Editar<?php } else { ?>Novo<?php }?> Curso</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2><?php if ((null !== ($_smarty_tpl->getValue('curso') ?? null))) {?>Editar<?php } else { ?>Novo<?php }?> Curso</h2>
+                        <a href="/cursos" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="<?php if ((null !== ($_smarty_tpl->getValue('curso') ?? null))) {?>/cursos/update/<?php echo $_smarty_tpl->getValue('curso')->getId();

@@ -30,6 +30,9 @@ class Aluno
     #[ORM\OneToMany(targetEntity: Matricula::class, mappedBy: 'aluno')]
     private Collection $matriculas;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $ativo = true;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -99,5 +102,15 @@ class Aluno
     {
         $this->matriculas->removeElement($matricula);
         return $this;
+    }
+
+    public function setAtivo(bool $ativo): void
+    {
+        $this->ativo = $ativo;
+    }
+
+    public function isAtivo(): bool
+    {
+        return $this->ativo;
     }
 }

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.1, created on 2024-11-20 04:33:47
+/* Smarty version 5.4.1, created on 2024-11-20 19:11:44
   from 'file:matriculas/form.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.1',
-  'unifunc' => 'content_673d66ab27d697_65300387',
+  'unifunc' => 'content_673e3470521f21_42251466',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b20806d560b3c5ef96d62e6524dc9466217c8d3f' => 
     array (
       0 => 'matriculas/form.tpl',
-      1 => 1732077196,
+      1 => 1732128908,
       2 => 'file',
     ),
   ),
@@ -20,20 +20,20 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673d66ab27d697_65300387 (\Smarty\Template $_smarty_tpl) {
+function content_673e3470521f21_42251466 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\matriculas';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_412380167673d66ab26b0a1_21633186', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_918662756673e34705138d5_10120132', "content");
 ?>
 
 <?php $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, "layouts/main.tpl", $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_412380167673d66ab26b0a1_21633186 extends \Smarty\Runtime\Block
+class Block_918662756673e34705138d5_10120132 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\matriculas';
@@ -44,7 +44,10 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\matricula
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2><?php if ((null !== ($_smarty_tpl->getValue('matricula') ?? null))) {?>Editar<?php } else { ?>Nova<?php }?> Matrícula</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2><?php if ((null !== ($_smarty_tpl->getValue('matricula') ?? null))) {?>Editar<?php } else { ?>Nova<?php }?> Matrícula</h2>
+                        <a href="/matriculas" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <?php if ((null !== ($_smarty_tpl->getValue('error') ?? null))) {?>
@@ -78,7 +81,7 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                         
                         <div class="mb-3">
                             <label for="curso_id" class="form-label">Curso</label>
-                            <select class="form-select" id="curso_id" name="curso_id" <?php if (!(null !== ($_smarty_tpl->getValue('matricula') ?? null))) {?>multiple<?php }?> required>
+                            <select class="form-select" id="curso_id" name="curso_id" required>
                                 <?php
 $_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('cursos'), 'curso');
 $foreach1DoElse = true;
@@ -95,18 +98,27 @@ $foreach1DoElse = false;
 }
 $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                             </select>
-                            <?php if (!(null !== ($_smarty_tpl->getValue('matricula') ?? null))) {?>
-                                <small class="form-text text-muted">Pressione CTRL para selecionar múltiplos cursos</small>
-                            <?php }?>
                         </div>
 
                         <?php if ((null !== ($_smarty_tpl->getValue('matricula') ?? null))) {?>
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select" id="status" name="status" required>
-                                    <option value="Ativa" <?php if ($_smarty_tpl->getValue('matricula')->getStatus() == 'Ativa') {?>selected<?php }?>>Ativa</option>
-                                    <option value="Cancelada" <?php if ($_smarty_tpl->getValue('matricula')->getStatus() == 'Cancelada') {?>selected<?php }?>>Cancelada</option>
+                                    <option value="Ativa" 
+                                        <?php if ($_smarty_tpl->getValue('matricula')->getStatus() == 'Ativa') {?>selected<?php }?>
+                                        <?php if (!$_smarty_tpl->getValue('matricula')->getCurso()->isAtivo()) {?>disabled<?php }?>>
+                                        Ativa
+                                    </option>
+                                    <option value="Cancelada" 
+                                        <?php if ($_smarty_tpl->getValue('matricula')->getStatus() == 'Cancelada') {?>selected<?php }?>>
+                                        Cancelada
+                                    </option>
                                 </select>
+                                <?php if (!$_smarty_tpl->getValue('matricula')->getCurso()->isAtivo()) {?>
+                                    <small class="text-danger">
+                                        Este curso está inativo. Não é possível ativar a matrícula.
+                                    </small>
+                                <?php }?>
                             </div>
                         <?php }?>
 

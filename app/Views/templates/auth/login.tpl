@@ -1,7 +1,14 @@
 {extends file="layouts/main.tpl"}
-
+    {block name="css_login"}
+    <link href="/css/login/login.css" rel="stylesheet">
+{/block}
 {block name="content"}
     <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h1 class='title mb-4'>Jubilut - Administrativo</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">

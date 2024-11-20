@@ -6,7 +6,10 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2>{if isset($aluno)}Editar{else}Novo{/if} Aluno</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>{if isset($aluno)}Editar{else}Novo{/if} Aluno</h2>
+                        <a href="/alunos" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     {if isset($error)}

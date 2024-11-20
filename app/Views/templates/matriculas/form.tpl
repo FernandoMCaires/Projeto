@@ -6,7 +6,10 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2>{if isset($matricula)}Editar{else}Nova{/if} Matrícula</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>{if isset($matricula)}Editar{else}Nova{/if} Matrícula</h2>
+                        <a href="/matriculas" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     {if isset($error)}
@@ -29,7 +32,7 @@
                         
                         <div class="mb-3">
                             <label for="curso_id" class="form-label">Curso</label>
-                            <select class="form-select" id="curso_id" name="curso_id" {if !isset($matricula)}multiple{/if} required>
+                            <select class="form-select" id="curso_id" name="curso_id" required>
                                 {foreach $cursos as $curso}
                                     <option value="{$curso->getId()}"
                                         {if isset($matricula) && $matricula->getCurso()->getId() == $curso->getId()}selected{/if}>
@@ -37,18 +40,27 @@
                                     </option>
                                 {/foreach}
                             </select>
-                            {if !isset($matricula)}
-                                <small class="form-text text-muted">Pressione CTRL para selecionar múltiplos cursos</small>
-                            {/if}
                         </div>
 
                         {if isset($matricula)}
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select" id="status" name="status" required>
-                                    <option value="Ativa" {if $matricula->getStatus() == 'Ativa'}selected{/if}>Ativa</option>
-                                    <option value="Cancelada" {if $matricula->getStatus() == 'Cancelada'}selected{/if}>Cancelada</option>
+                                    <option value="Ativa" 
+                                        {if $matricula->getStatus() == 'Ativa'}selected{/if}
+                                        {if !$matricula->getCurso()->isAtivo()}disabled{/if}>
+                                        Ativa
+                                    </option>
+                                    <option value="Cancelada" 
+                                        {if $matricula->getStatus() == 'Cancelada'}selected{/if}>
+                                        Cancelada
+                                    </option>
                                 </select>
+                                {if !$matricula->getCurso()->isAtivo()}
+                                    <small class="text-danger">
+                                        Este curso está inativo. Não é possível ativar a matrícula.
+                                    </small>
+                                {/if}
                             </div>
                         {/if}
 
