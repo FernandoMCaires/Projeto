@@ -18,8 +18,8 @@ try {
     // Inicia a sessão em todas as requisições
     session_start();
 
-    // Verifica autenticação para todas as rotas exceto login
-    if ($uri !== '/login' && !isset($_SESSION['usuario_id'])) {
+    // Verifica autenticação para todas as rotas exceto login e logout
+    if ($uri !== '/login' && $uri !== '/logout' && !isset($_SESSION['usuario_id'])) {
         header('Location: /login');
         exit;
     }
@@ -30,6 +30,9 @@ try {
     } 
     elseif ($uri === '/login' && $method === 'POST') {
         $authController->login();
+    }
+    elseif ($uri === '/logout' && $method === 'GET') {
+        $authController->logout();
     }
     elseif ($uri === '/dashboard') {
         $smarty->assign('title', 'Dashboard - Sistema de Matrículas');

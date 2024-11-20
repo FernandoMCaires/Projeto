@@ -49,4 +49,14 @@ class AuthController
             echo "Erro: " . $e->getMessage();
         }
     }
+
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+        
+        header('Location: /login');
+        exit;
+    }
 }
