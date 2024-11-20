@@ -1,0 +1,14 @@
+{
+    "name": "fernando.caires/plataforma",
+    "autoload": {
+        "psr-4": {
+            "FernandoCaires\\Plataforma\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fernando",
+            "email": "fernandomullerc@gmail.com"
+        }
+    ]
+}
