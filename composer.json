@@ -2,7 +2,7 @@
     "name": "fernando.caires/plataforma",
     "autoload": {
         "psr-4": {
-            "FernandoCaires\\Plataforma\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
@@ -10,5 +10,15 @@
             "name": "Fernando",
             "email": "fernandomullerc@gmail.com"
         }
-    ]
+    ],
+    "require": {
+        "doctrine/orm": "^2.11.0",
+        "doctrine/dbal": "^3.2",
+        "symfony/yaml": "^5.4",
+        "symfony/cache": "^5.4",
+        "doctrine/annotations": "^1.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
 }
