@@ -2,35 +2,29 @@
 
 namespace App\Models;
 
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping as ORM;
 
-#[Entity]
-#[Table(name: 'matriculas')]
+#[ORM\Entity]
+#[ORM\Table(name: 'matriculas')]
 class Matricula
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ManyToOne(targetEntity: Aluno::class)]
-    #[JoinColumn(name: 'aluno_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Aluno::class)]
+    #[ORM\JoinColumn(name: 'aluno_id', referencedColumnName: 'id', nullable: false)]
     private Aluno $aluno;
 
-    #[ManyToOne(targetEntity: Curso::class)]
-    #[JoinColumn(name: 'curso_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Curso::class)]
+    #[ORM\JoinColumn(name: 'curso_id', referencedColumnName: 'id', nullable: false)]
     private Curso $curso;
 
-    #[Column(name: 'data_matricula', type: 'datetime')]
+    #[ORM\Column(name: 'data_matricula', type: 'datetime')]
     private \DateTime $dataMatricula;
 
-    #[Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20)]
     private string $status;
 
     // Getters

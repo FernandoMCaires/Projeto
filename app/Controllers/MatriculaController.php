@@ -141,13 +141,17 @@ class MatriculaController
     public function edit(int $id)
     {
         $matricula = $this->em->find(Matricula::class, $id);
+        if (!$matricula) {
+            throw new \Exception('Matrícula não encontrada');
+        }
+
         $alunos = $this->em->getRepository(Aluno::class)->findAll();
-        $cursos = $this->em->getRepository(Curso::class)->findAll();
-        
+        $curso = $matricula->getCurso();
+
         $this->smarty->assign('title', 'Editar Matrícula - Sistema de Matrículas');
         $this->smarty->assign('matricula', $matricula);
         $this->smarty->assign('alunos', $alunos);
-        $this->smarty->assign('cursos', $cursos);
+        $this->smarty->assign('curso', $curso);
         $this->smarty->display('matriculas/form.tpl');
     }
 
@@ -166,10 +170,7 @@ class MatriculaController
                 throw new \Exception('Aluno não encontrado');
             }
 
-            $curso = $this->em->find(Curso::class, $_POST['curso_id']);
-            if (!$curso) {
-                throw new \Exception('Curso não encontrado');
-            }
+            $curso = $matricula->getCurso();
 
             // Verifica se está tentando ativar uma matrícula de um curso inativo
             if ($_POST['status'] === 'Ativa' && !$curso->isAtivo()) {
@@ -177,7 +178,6 @@ class MatriculaController
             }
 
             $matricula->setAluno($aluno);
-            $matricula->setCurso($curso);
             $matricula->setStatus($_POST['status']);
 
             $this->em->flush();

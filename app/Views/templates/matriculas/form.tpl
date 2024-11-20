@@ -1,6 +1,7 @@
 {extends file="layouts/main.tpl"}
 
 {block name="content"}
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -19,28 +20,17 @@
                     <form method="POST" action="{if isset($matricula)}/matriculas/update/{$matricula->getId()}{else}/matriculas/criar{/if}">
                         <div class="mb-3">
                             <label for="aluno_id" class="form-label">Aluno</label>
-                            <select class="form-select" id="aluno_id" name="aluno_id" required>
-                                <option value="">Selecione um aluno</option>
-                                {foreach $alunos as $aluno}
-                                    <option value="{$aluno->getId()}" 
-                                        {if isset($matricula) && $matricula->getAluno()->getId() == $aluno->getId()}selected{/if}>
-                                        {$aluno->getNome()}
-                                    </option>
-                                {/foreach}
+                            <select class="form-select" id="aluno_id" name="aluno_id" required disabled>
+                                <option value="{$matricula->getAluno()->getId()}" selected>
+                                    {$matricula->getAluno()->getNome()}
+                                </option>
                             </select>
+                            <input type="hidden" name="aluno_id" value="{$matricula->getAluno()->getId()}">
                         </div>
                         
                         <div class="mb-3">
                             <label for="curso_id" class="form-label">Curso</label>
-                            <select class="form-select" id="curso_id" name="curso_id[]" multiple required>
-                                {foreach $cursos as $curso}
-                                    <option value="{$curso->getId()}"
-                                        {if isset($matricula) && $matricula->getCurso()->getId() == $curso->getId()}selected{/if}>
-                                        {$curso->getNome()}
-                                    </option>
-                                {/foreach}
-                            </select>
-                            <small class="form-text text-muted">Use CTRL para selecionar múltiplos cursos</small>
+                            <input type="text" class="form-control" id="curso_id" value="{$curso->getNome()}" readonly>
                         </div>
 
                         {if isset($matricula)}
@@ -49,7 +39,7 @@
                                 <select class="form-select" id="status" name="status" required>
                                     <option value="Ativa" 
                                         {if $matricula->getStatus() == 'Ativa'}selected{/if}
-                                        {if !$matricula->getCurso()->isAtivo()}disabled{/if}>
+                                        {if !$curso->isAtivo()}disabled{/if}>
                                         Ativa
                                     </option>
                                     <option value="Cancelada" 
@@ -57,7 +47,7 @@
                                         Cancelada
                                     </option>
                                 </select>
-                                {if !$matricula->getCurso()->isAtivo()}
+                                {if !$curso->isAtivo()}
                                     <small class="text-danger">
                                         Este curso está inativo. Não é possível ativar a matrícula.
                                     </small>
