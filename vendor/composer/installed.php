@@ -3,7 +3,7 @@
         'name' => 'fernando.caires/plataforma',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd9bd4ba421109016c6cbdc717e8ae2741a301905',
+        'reference' => '0a9b33ba860d1a9f2b1a6d00c0e9b37cb0ad6a0c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -121,7 +121,7 @@
         'fernando.caires/plataforma' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd9bd4ba421109016c6cbdc717e8ae2741a301905',
+            'reference' => '0a9b33ba860d1a9f2b1a6d00c0e9b37cb0ad6a0c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
