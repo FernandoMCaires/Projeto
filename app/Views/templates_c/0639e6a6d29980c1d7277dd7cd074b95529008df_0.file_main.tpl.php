@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.4.2, created on 2024-11-21 14:40:42
+/* Smarty version 5.4.2, created on 2024-11-21 14:44:38
   from 'file:layouts/main.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.2',
-  'unifunc' => 'content_673f466a7e1aa6_84589618',
+  'unifunc' => 'content_673f47561b09b3_76291604',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_673f466a7e1aa6_84589618 (\Smarty\Template $_smarty_tpl) {
+function content_673f47561b09b3_76291604 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -31,12 +31,12 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_472195559673f466a7dee98_27637586', "css_login");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_38058030673f47561aca03_08715293', "css_login");
 ?>
 
         <link href="css/main/main.css" rel="stylesheet">
         <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1828696991673f466a7df685_02472291', "css_main");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_2147261894673f47561ad1c9_35997147', "css_main");
 ?>
 
     
@@ -49,7 +49,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1828696991673
             </div>
         <?php }?>
         <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1501992259673f466a7e1574_50821378', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_704309693673f47561b0474_78614054', "content");
 ?>
 
     </div>
@@ -60,7 +60,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1501992259673
 </body>
 </html><?php }
 /* {block "css_login"} */
-class Block_472195559673f466a7dee98_27637586 extends \Smarty\Runtime\Block
+class Block_38058030673f47561aca03_08715293 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
@@ -68,7 +68,7 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
 }
 /* {/block "css_login"} */
 /* {block "css_main"} */
-class Block_1828696991673f466a7df685_02472291 extends \Smarty\Runtime\Block
+class Block_2147261894673f47561ad1c9_35997147 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
@@ -76,7 +76,7 @@ $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
 }
 /* {/block "css_main"} */
 /* {block "content"} */
-class Block_1501992259673f466a7e1574_50821378 extends \Smarty\Runtime\Block
+class Block_704309693673f47561b0474_78614054 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'D:\\Documents\\Projeto\\app\\Views\\templates\\layouts';
